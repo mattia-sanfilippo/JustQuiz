@@ -42,7 +42,7 @@ fun QuizCard(quiz: Quiz) {
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Bottom)
              {
                 Text(text = quiz.name, fontSize = MaterialTheme.typography.bodyLarge.fontSize, color = MaterialTheme.colorScheme.primary)
-                Text(text = "${quiz.questions} questions", fontSize = MaterialTheme.typography.bodySmall.fontSize, color = MaterialTheme.colorScheme.secondary)
+                Text(text = "${quiz.numberOfQuestions} questions", fontSize = MaterialTheme.typography.bodySmall.fontSize, color = MaterialTheme.colorScheme.secondary)
             }
         }
     }
