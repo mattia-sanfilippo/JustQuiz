@@ -16,16 +16,11 @@ fun QuizCards(quizzes: List<Quiz>) {
 fun PreviewQuizCards() {
     QuizCards(
         quizzes = listOf(
-            Quiz("Quiz Name 1", 10),
-            Quiz("Quiz Name 2", 20),
-            Quiz("Quiz Name 3", 30),
-            Quiz("Quiz Name 4", 40),
-            Quiz("Quiz Name 5", 50),
-            Quiz("Quiz Name 6", 60),
-            Quiz("Quiz Name 7", 70),
-            Quiz("Quiz Name 8", 80),
-            Quiz("Quiz Name 9", 90),
-            Quiz("Quiz Name 10", 100),
+            Quiz(1, "Quiz Name 1", 10),
+            Quiz(2, "Quiz Name 2", 20),
+            Quiz(3, "Quiz Name 3", 30),
+            Quiz(4, "Quiz Name 4", 40),
+            Quiz(5, "Quiz Name 5", 50),
         )
     )
 }

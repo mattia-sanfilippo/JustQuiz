@@ -52,6 +52,6 @@ fun QuizCard(quiz: Quiz) {
 @Composable
 fun PreviewQuizCard() {
     AppTheme {
-        QuizCard(quiz = Quiz("Quiz Name", 10))
+        QuizCard(quiz = Quiz(1, "Quiz Name", 10))
     }
 }
