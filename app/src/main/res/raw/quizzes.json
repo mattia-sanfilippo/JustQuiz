@@ -1,0 +1,24 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "name": "Capitals",
+      "numberOfQuestions": 30
+    },
+    {
+      "id": 2,
+      "name": "World Flags",
+      "numberOfQuestions": 30
+    },
+    {
+      "id": 3,
+      "name": "Currencies",
+      "numberOfQuestions": 30
+    },
+    {
+      "id": 4,
+      "name": "Car Brands",
+      "numberOfQuestions": 30
+    }
+  ]
+}
