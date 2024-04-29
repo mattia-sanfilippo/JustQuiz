@@ -1,5 +1,6 @@
 package com.mattiasanfilippo.justquiz
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.Gson
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
@@ -41,9 +43,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                Content(quizList.quizzes)
+                Content(quizList.quizzes, ::onQuizCardClick)
             }
         }
+    }
+
+    private fun onQuizCardClick(quizId: Int) {
+        val intent = Intent(this, QuizActivity::class.java)
+        intent.putExtra("QUIZ_ID", quizId)
+        startActivity(intent)
     }
 }
 
@@ -56,26 +64,27 @@ fun PreviewMainActivity() {
                 Quiz(1, "Quiz Name 1", 10),
                 Quiz(2, "Quiz Name 2", 20),
                 Quiz(3, "Quiz Name 3", 30),
-            )
+            ),
+            onQuizCardClick = { }
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Content(quizzes: List<Quiz>) {
+fun Content(quizzes: List<Quiz>, onQuizCardClick: (Int) -> Unit) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = { TopAppBar(scrollBehavior = scrollBehavior) },
     ) {
         innerPadding ->
-        ScrollContent(innerPadding, quizzes)
+        ScrollContent(innerPadding, quizzes, onQuizCardClick)
     }
 }
 
 @Composable
-fun ScrollContent(innerPadding: PaddingValues, quizzes: List<Quiz>) {
+fun ScrollContent(innerPadding: PaddingValues, quizzes: List<Quiz>, onQuizCardClick: (Int) -> Unit) {
     Column (modifier = Modifier.padding(innerPadding)) {
         Text(text = "Quizzes", color = MaterialTheme.colorScheme.primary, fontSize = MaterialTheme.typography.titleLarge.fontSize)
         LazyVerticalGrid(columns = GridCells.Adaptive(156.dp), contentPadding = PaddingValues(
@@ -83,8 +92,9 @@ fun ScrollContent(innerPadding: PaddingValues, quizzes: List<Quiz>) {
             end = 16.dp
         ), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             items(quizzes) { quiz ->
-                QuizCard(quiz = quiz)
+                QuizCard(quiz = quiz, onClick = { onQuizCardClick(quiz.id) })
             }
         }
     }
 }
+

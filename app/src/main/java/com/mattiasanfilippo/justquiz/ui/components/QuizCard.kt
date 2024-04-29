@@ -22,13 +22,14 @@ import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.ui.theme.AppTheme
 
 @Composable
-fun QuizCard(quiz: Quiz) {
+fun QuizCard(quiz: Quiz, onClick: () -> Unit) {
     Surface (
         color = MaterialTheme.colorScheme.surfaceColorAtElevation(elevation = 3.dp),
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .width(156.dp)
             .height(156.dp),
+        onClick = onClick
     )
     {
         Column (
@@ -52,6 +53,6 @@ fun QuizCard(quiz: Quiz) {
 @Composable
 fun PreviewQuizCard() {
     AppTheme {
-        QuizCard(quiz = Quiz(1, "Quiz Name", 10))
+        QuizCard(quiz = Quiz(1, "Quiz Name", 10), onClick = { })
     }
 }

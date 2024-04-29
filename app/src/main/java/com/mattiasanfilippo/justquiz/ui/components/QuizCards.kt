@@ -7,7 +7,7 @@ import com.mattiasanfilippo.justquiz.model.Quiz
 @Composable
 fun QuizCards(quizzes: List<Quiz>) {
     quizzes.forEach { quiz ->
-        QuizCard(quiz = quiz)
+        QuizCard(quiz = quiz, onClick = { })
     }
 }
 
