@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.Gson
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
