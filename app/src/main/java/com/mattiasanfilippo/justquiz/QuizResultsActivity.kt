@@ -33,7 +33,8 @@ class QuizResultsActivity : ComponentActivity() {
     }
 
     private fun onClickGoToHome() {
-        finish()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun onClickRetry(quizId: Int) {
