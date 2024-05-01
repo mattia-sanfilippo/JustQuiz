@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 import java.io.InputStream
 
 @Composable
-fun Home(navController: NavController) {
+fun Home(navController: NavController, innerPadding: PaddingValues) {
     val context = LocalContext.current
     val inputStream: InputStream = context.resources.openRawResource(R.raw.quizzes)
     val json = inputStream.bufferedReader().use { it.readText() }
@@ -72,13 +72,13 @@ fun Home(navController: NavController) {
             val results = db.resultDao().getAll()
             val completedQuizList = results.mapNotNull { result ->
                 quizList.quizzes.find { it.id == result.quizId }
-            }
+            }.distinctBy { it.id }
             completedQuizzes.value = completedQuizList
         }
     }
 
     ContentWithDialog(
-        navController = navController,
+        innerPadding = innerPadding,
         quizzes = quizList.quizzes,
         completedQuizzes = completedQuizzes.value,
         onQuizCardClick = ::onQuizCardClick,
@@ -91,7 +91,7 @@ fun Home(navController: NavController) {
 
 @Composable
 fun ContentWithDialog(
-    navController: NavController,
+    innerPadding: PaddingValues,
     quizzes: List<Quiz>,
     completedQuizzes: List<Quiz>,
     onQuizCardClick: (Int) -> Unit,
@@ -133,7 +133,7 @@ fun ContentWithDialog(
             }
         )
     }
-    Content(navController, quizzes, completedQuizzes, onQuizCardClick, ::onRetryQuizCardClick)
+    Content(innerPadding, quizzes, completedQuizzes, onQuizCardClick, ::onRetryQuizCardClick)
 }
 
 @Preview
@@ -141,7 +141,7 @@ fun ContentWithDialog(
 fun PreviewMainActivity() {
     AppTheme {
         Content(
-            navController = rememberNavController(),
+            innerPadding = PaddingValues(16.dp),
             quizzes = listOf(
                 Quiz(1, "Quiz Name 1", 10),
                 Quiz(2, "Quiz Name 2", 20),
@@ -161,18 +161,12 @@ fun PreviewMainActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Content(
-    navController: NavController,
+    innerPadding: PaddingValues,
     quizzes: List<Quiz>,
     completedQuizzes: List<Quiz>,
     onQuizCardClick: (Int) -> Unit,
     onRetryQuizCardClick: (Int) -> Unit
 ) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { TopAppBar(scrollBehavior = scrollBehavior) },
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) { innerPadding ->
         ScrollContent(
             innerPadding,
             quizzes,
@@ -180,7 +174,6 @@ fun Content(
             onQuizCardClick,
             onRetryQuizCardClick
         )
-    }
 }
 
 @Composable

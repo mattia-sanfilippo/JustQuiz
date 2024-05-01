@@ -2,6 +2,7 @@ package com.mattiasanfilippo.justquiz.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,7 +41,7 @@ import java.io.InputStream
 import kotlin.reflect.KFunction3
 
 @Composable
-fun Quiz(navController: NavController, quizId: Int, onlyWrongQuestions: Boolean) {
+fun Quiz(navController: NavController, innerPadding: PaddingValues, quizId: Int, onlyWrongQuestions: Boolean) {
     val context = LocalContext.current
     val inputStream: InputStream = context.resources.openRawResource(R.raw.questions)
     val json = inputStream.bufferedReader().use { it.readText() }
@@ -93,13 +94,13 @@ fun Quiz(navController: NavController, quizId: Int, onlyWrongQuestions: Boolean)
     if (loading) {
         CircularProgressIndicator()
     } else {
-        Content(quizId, questions, ::goToResults)
+        Content(innerPadding, quizId, questions, ::goToResults)
     }
 }
 
 
 @Composable
-fun Content(quizId: Int, questions: List<Question>, onClickGoToResults: KFunction3<Int, List<CorrectAnswer>, Int, Unit>) {
+fun Content(innerPadding: PaddingValues, quizId: Int, questions: List<Question>, onClickGoToResults: KFunction3<Int, List<CorrectAnswer>, Int, Unit>) {
 
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var questionAnswered by remember { mutableStateOf(false) }
@@ -116,7 +117,7 @@ fun Content(quizId: Int, questions: List<Question>, onClickGoToResults: KFunctio
     if (currentQuestionIndex < questions.size) {
         val currentQuestion = questions[currentQuestionIndex]
         Column (
-            Modifier.padding(16.dp)
+            Modifier.padding(top = innerPadding.calculateTopPadding() + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
             QuestionNumber(currentQuestionIndex + 1, questions.size)
             Spacer(modifier = Modifier.height(8.dp))

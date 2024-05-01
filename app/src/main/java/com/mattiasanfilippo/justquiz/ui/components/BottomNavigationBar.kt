@@ -22,7 +22,7 @@ val items = listOf(
 sealed class BottomNavItem(val route: String, val title: String, val icon: Int) {
     data object Home : BottomNavItem("home", "Home", R.drawable.list_24)
     data object History : BottomNavItem("history", "History", R.drawable.history_24)
-    data object Settings : BottomNavItem("profile", "Profile", R.drawable.settings_24)
+    data object Settings : BottomNavItem("settings", "Settings", R.drawable.settings_24)
 }
 
 @Composable

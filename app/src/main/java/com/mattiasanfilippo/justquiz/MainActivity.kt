@@ -40,6 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
+import com.mattiasanfilippo.justquiz.screens.Main
 import com.mattiasanfilippo.justquiz.ui.components.BottomNavigationBar
 import com.mattiasanfilippo.justquiz.ui.components.QuizCard
 import com.mattiasanfilippo.justquiz.ui.components.TopAppBar
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                App()
+                Main()
             }
         }
     }

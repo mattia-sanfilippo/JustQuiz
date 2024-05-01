@@ -1,6 +1,7 @@
 package com.mattiasanfilippo.justquiz.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,7 @@ import com.mattiasanfilippo.justquiz.R
 import com.mattiasanfilippo.justquiz.ui.theme.AppTheme
 
 @Composable
-fun QuizResults(navController: NavController, quizId: Int, totalQuestions: Int, correctAnswers: Int) {
+fun QuizResults(navController: NavController, innerPadding: PaddingValues, quizId: Int, totalQuestions: Int, correctAnswers: Int) {
     val percentage = (correctAnswers.toFloat() / totalQuestions.toFloat() * 100).toInt()
 
     fun onClickRetry() {
@@ -34,13 +35,13 @@ fun QuizResults(navController: NavController, quizId: Int, totalQuestions: Int, 
     }
 
 
-    Content(correctAnswers, totalQuestions, percentage, ::onClickRetry, ::onClickGoToHome)
+    Content(innerPadding, correctAnswers, totalQuestions, percentage, ::onClickRetry, ::onClickGoToHome)
 }
 
 @Composable
-fun Content(correctAnswers: Int, totalQuestions: Int, percentage: Int, onClickRetry: () -> Unit, onClickGoToHome: () -> Unit) {
+fun Content(innerPadding: PaddingValues, correctAnswers: Int, totalQuestions: Int, percentage: Int, onClickRetry: () -> Unit, onClickGoToHome: () -> Unit) {
     Column(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(top = innerPadding.calculateTopPadding() + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (percentage >= 50) {

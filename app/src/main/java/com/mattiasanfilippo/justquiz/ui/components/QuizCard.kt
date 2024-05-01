@@ -35,7 +35,7 @@ fun QuizCard(quiz: Quiz, onClick: () -> Unit) {
         Column (
             modifier = Modifier.padding(8.dp),
         ) {
-            Icon(painter = painterResource(id = R.drawable.outline_flag_24), contentDescription = "Quiz Icon", tint = MaterialTheme.colorScheme.primary, modifier = Modifier
+            Icon(painter = painterResource(id = R.drawable.quiz_24), contentDescription = "Quiz Icon", tint = MaterialTheme.colorScheme.primary, modifier = Modifier
                 .weight(2f)
                 .align(Alignment.CenterHorizontally)
                 .width(84.dp)

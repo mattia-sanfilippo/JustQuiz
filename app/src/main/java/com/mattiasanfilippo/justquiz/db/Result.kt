@@ -8,5 +8,6 @@ data class Result(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val quizId: Int,
     val correctAnswers: Int,
-    val totalQuestions: Int
+    val totalQuestions: Int,
+    val timestamp: Long = System.currentTimeMillis()
 )
