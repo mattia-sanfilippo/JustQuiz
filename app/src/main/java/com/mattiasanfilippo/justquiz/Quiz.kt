@@ -1,9 +1,5 @@
 package com.mattiasanfilippo.justquiz
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +11,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import com.mattiasanfilippo.justquiz.db.AnsweredQuestion
 import com.mattiasanfilippo.justquiz.db.Result
@@ -31,7 +30,6 @@ import com.mattiasanfilippo.justquiz.model.CorrectAnswer
 import com.mattiasanfilippo.justquiz.model.Question
 import com.mattiasanfilippo.justquiz.model.QuestionList
 import com.mattiasanfilippo.justquiz.ui.components.Answer
-import com.mattiasanfilippo.justquiz.ui.theme.AppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,24 +37,41 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import kotlin.reflect.KFunction3
 
-class QuizActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+@Composable
+fun Quiz(navController: NavController, quizId: Int, onlyWrongQuestions: Boolean) {
+    val context = LocalContext.current
+    val inputStream: InputStream = context.resources.openRawResource(R.raw.questions)
+    val json = inputStream.bufferedReader().use { it.readText() }
 
-        val quizId = intent.getIntExtra("QUIZ_ID", 0)
-        val onlyWrongQuestions = intent.getBooleanExtra("ONLY_WRONG_QUESTIONS", false)
+    val gson = Gson()
+    val questionsList = gson.fromJson(json, QuestionList::class.java)
 
-        val inputStream: InputStream = resources.openRawResource(R.raw.questions)
+    var loading by remember { mutableStateOf(true) }
+    var questions by remember { mutableStateOf<List<Question>>(emptyList()) }
 
-        val json = inputStream.bufferedReader().use { it.readText() }
+    fun goToResults(quizId: Int, correctAnswers: List<CorrectAnswer>, totalQuestions: Int) {
+        val result = Result(0, quizId, correctAnswers.size, totalQuestions)
+        val db = MainApplication.database
 
-        val gson = Gson()
+        CoroutineScope(Dispatchers.IO).launch {
+            // save the current result
+            db.resultDao().insert(result)
 
-        val questionsList = gson.fromJson(json, QuestionList::class.java)
+            // delete all correct answered questions
+            db.answeredQuestionDao().deleteAllByQuizId(quizId)
 
-        var loading by mutableStateOf(true)
-        var questions by mutableStateOf<List<Question>>(emptyList())
+            // insert the correct answered questions
+            correctAnswers.forEach {
+                db.answeredQuestionDao().insert(AnsweredQuestion(quizId, it.questionId))
+            }
 
+            withContext(Dispatchers.Main) {
+                navController.navigate("quizResults/$quizId/$totalQuestions/${correctAnswers.size}")
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val db = MainApplication.database
             val answeredQuestions = db.answeredQuestionDao().getAllByQuizId(quizId)
@@ -71,48 +86,15 @@ class QuizActivity : ComponentActivity() {
                 loading = false
             }
         }
-
-        setContent {
-            AppTheme {
-                if (loading) {
-                    CircularProgressIndicator()
-                } else {
-                    Content(quizId, questions, ::onClickGoToResults)
-                }
-            }
-        }
-
-
     }
 
-    private fun onClickGoToResults(quizId: Int, correctAnswers: List<CorrectAnswer>, totalQuestions: Int) {
-
-        val result = Result(0, quizId, correctAnswers.size, totalQuestions)
-        val db = MainApplication.database
-
-        CoroutineScope(Dispatchers.IO).launch {
-            // save the result
-            db.resultDao().insert(result)
-
-            // delete all correct answered questions from the previous attempt
-            db.answeredQuestionDao().deleteAllByQuizId(quizId)
-
-            // insert all correct answered questions from the current attempt
-            correctAnswers.forEach {
-                db.answeredQuestionDao().insert(AnsweredQuestion(quizId, it.questionId))
-            }
-
-            withContext(Dispatchers.Main) {
-                val intent = Intent(this@QuizActivity, QuizResultsActivity::class.java)
-                intent.putExtra("QUIZ_ID", quizId)
-                intent.putExtra("CORRECT_ANSWERS", correctAnswers.size)
-                intent.putExtra("TOTAL_QUESTIONS", totalQuestions)
-                startActivity(intent)
-            }
-        }
+    if (loading) {
+        CircularProgressIndicator()
+    } else {
+        Content(quizId, questions, ::goToResults)
     }
-
 }
+
 
 @Composable
 fun Content(quizId: Int, questions: List<Question>, onClickGoToResults: KFunction3<Int, List<CorrectAnswer>, Int, Unit>) {

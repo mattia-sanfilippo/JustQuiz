@@ -1,10 +1,5 @@
 package com.mattiasanfilippo.justquiz
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -22,35 +17,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mattiasanfilippo.justquiz.ui.theme.AppTheme
 
-class QuizResultsActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+@Composable
+fun QuizResults(navController: NavController, quizId: Int, totalQuestions: Int, correctAnswers: Int) {
+    val percentage = (correctAnswers.toFloat() / totalQuestions.toFloat() * 100).toInt()
 
-        val quizId = intent.getIntExtra("QUIZ_ID", 0)
-        val correctAnswers = intent.getIntExtra("CORRECT_ANSWERS", 0)
-        val totalQuestions = intent.getIntExtra("TOTAL_QUESTIONS", 0)
-
-        val percentage = (correctAnswers.toFloat() / totalQuestions.toFloat() * 100).toInt()
-
-        setContent {
-            AppTheme {
-                Content(correctAnswers,  totalQuestions, percentage, { onClickRetry(quizId) }, ::onClickGoToHome)
-            }
-        }
+    fun onClickRetry() {
+        navController.navigate("quiz/$quizId")
     }
 
-    private fun onClickGoToHome() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+    fun onClickGoToHome() {
+        navController.navigate("home")
     }
 
-    private fun onClickRetry(quizId: Int) {
-        val intent = Intent(this, QuizActivity::class.java)
-        intent.putExtra("QUIZ_ID", quizId)
-        startActivity(intent)
-    }
+
+    Content(correctAnswers, totalQuestions, percentage, ::onClickRetry, ::onClickGoToHome)
 }
 
 @Composable
