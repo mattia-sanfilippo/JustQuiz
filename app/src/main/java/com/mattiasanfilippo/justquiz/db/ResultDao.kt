@@ -6,7 +6,7 @@ import androidx.room.Query
 
 @Dao
 interface ResultDao {
-    @Query("SELECT * FROM result")
+    @Query("SELECT * FROM result ORDER BY timestamp DESC")
     fun getAll(): List<Result>
 
     @Insert

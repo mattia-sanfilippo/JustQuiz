@@ -26,6 +26,7 @@ import com.mattiasanfilippo.justquiz.R
 import com.mattiasanfilippo.justquiz.db.Result
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
+import com.mattiasanfilippo.justquiz.ui.components.HistoryItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,21 +74,3 @@ fun History(innerPadding: PaddingValues) {
     }
 }
 
-fun convertTimestampToDate(timestamp: Long): String {
-    val date = Date(timestamp)
-    val format = SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault())
-    return format.format(date)
-}
-
-@Composable
-fun HistoryItem(quizName: String, date: Long, totalQuestions: Int, correctAnswers: Int) {
-    Box {
-        Column {
-            Row {
-                Text(text = quizName, color = MaterialTheme.colorScheme.primary, modifier = Modifier.weight(2f))
-                Text(text = convertTimestampToDate(date), color = MaterialTheme.colorScheme.secondary)
-            }
-            Text(text = "$correctAnswers out of $totalQuestions", color = MaterialTheme.colorScheme.secondary)
-        }
-    }
-}
