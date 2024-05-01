@@ -664,6 +664,143 @@
           ]
         }
       ]
+    },
+    {
+      "quizId": 3,
+      "questions": [
+        {
+          "id": 1,
+          "question": "Euro",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": false
+            },
+            {
+              "option": "USD",
+              "correct": false
+            },
+            {
+              "option": "EUR",
+              "correct": true
+            },
+            {
+              "option": "JPY",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "question": "British Pound",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": true
+            },
+            {
+              "option": "USD",
+              "correct": false
+            },
+            {
+              "option": "EUR",
+              "correct": false
+            },
+            {
+              "option": "JPY",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "question": "United States Dollar",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": false
+            },
+            {
+              "option": "USD",
+              "correct": true
+            },
+            {
+              "option": "EUR",
+              "correct": false
+            },
+            {
+              "option": "JPY",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "question": "Yen",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": false
+            },
+            {
+              "option": "USD",
+              "correct": false
+            },
+            {
+              "option": "EUR",
+              "correct": false
+            },
+            {
+              "option": "JPY",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "question": "Indian Rupee",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": false
+            },
+            {
+              "option": "USD",
+              "correct": false
+            },
+            {
+              "option": "EUR",
+              "correct": false
+            },
+            {
+              "option": "INR",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "question": "Real",
+          "answers": [
+            {
+              "option": "GBP",
+              "correct": false
+            },
+            {
+              "option": "USD",
+              "correct": false
+            },
+            {
+              "option": "EUR",
+              "correct": false
+            },
+            {
+              "option": "BRL",
+              "correct": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }

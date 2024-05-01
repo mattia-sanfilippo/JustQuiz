@@ -91,10 +91,17 @@ class QuizActivity : ComponentActivity() {
         val db = MainApplication.database
 
         CoroutineScope(Dispatchers.IO).launch {
+            // save the result
             db.resultDao().insert(result)
+
+            // delete all correct answered questions from the previous attempt
+            db.answeredQuestionDao().deleteAllByQuizId(quizId)
+
+            // insert all correct answered questions from the current attempt
             correctAnswers.forEach {
                 db.answeredQuestionDao().insert(AnsweredQuestion(quizId, it.questionId))
             }
+
             withContext(Dispatchers.Main) {
                 val intent = Intent(this@QuizActivity, QuizResultsActivity::class.java)
                 intent.putExtra("QUIZ_ID", quizId)
