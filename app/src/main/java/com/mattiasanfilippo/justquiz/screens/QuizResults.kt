@@ -1,4 +1,4 @@
-package com.mattiasanfilippo.justquiz
+package com.mattiasanfilippo.justquiz.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mattiasanfilippo.justquiz.R
 import com.mattiasanfilippo.justquiz.ui.theme.AppTheme
 
 @Composable

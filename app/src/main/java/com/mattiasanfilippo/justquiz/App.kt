@@ -6,13 +6,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.mattiasanfilippo.justquiz.screens.Home
+import com.mattiasanfilippo.justquiz.screens.Quiz
+import com.mattiasanfilippo.justquiz.screens.QuizResults
+import com.mattiasanfilippo.justquiz.screens.Screen
 
 @Composable
 fun App() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.Home.route ) {
         composable(Screen.Home.route) { Home(navController) }
-        composable(Screen.Quiz.route,
+        composable(
+            Screen.Quiz.route,
             arguments = listOf(
                 navArgument("quizId") { type = NavType.IntType },
                 navArgument("onlyWrongQuestions") { type = NavType.BoolType }
@@ -22,7 +27,8 @@ fun App() {
 
             Quiz(navController, quizId = quizId!!, onlyWrongQuestions = onlyWrongQuestions!!)
         }
-        composable(Screen.QuizResults.route,
+        composable(
+            Screen.QuizResults.route,
             arguments = listOf(
                 navArgument("quizId") { type = NavType.IntType },
                 navArgument("totalQuestions") { type = NavType.IntType },

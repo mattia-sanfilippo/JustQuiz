@@ -1,4 +1,4 @@
-package com.mattiasanfilippo.justquiz
+package com.mattiasanfilippo.justquiz.screens
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")

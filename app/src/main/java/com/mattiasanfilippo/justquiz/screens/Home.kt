@@ -1,6 +1,5 @@
-package com.mattiasanfilippo.justquiz
+package com.mattiasanfilippo.justquiz.screens
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
+import com.mattiasanfilippo.justquiz.MainApplication
+import com.mattiasanfilippo.justquiz.R
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
 import com.mattiasanfilippo.justquiz.ui.components.BottomNavigationBar

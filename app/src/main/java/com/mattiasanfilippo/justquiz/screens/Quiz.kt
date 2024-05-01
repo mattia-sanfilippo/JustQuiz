@@ -1,4 +1,4 @@
-package com.mattiasanfilippo.justquiz
+package com.mattiasanfilippo.justquiz.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.gson.Gson
+import com.mattiasanfilippo.justquiz.MainApplication
+import com.mattiasanfilippo.justquiz.R
 import com.mattiasanfilippo.justquiz.db.AnsweredQuestion
 import com.mattiasanfilippo.justquiz.db.Result
 import com.mattiasanfilippo.justquiz.model.Answer
