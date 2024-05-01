@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.gson.Gson
@@ -92,7 +93,7 @@ fun Quiz(navController: NavController, innerPadding: PaddingValues, quizId: Int,
     }
 
     if (loading) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(modifier = Modifier.testTag("LoadingIndicator"))
     } else {
         Content(innerPadding, quizId, questions, ::goToResults)
     }
@@ -117,7 +118,7 @@ fun Content(innerPadding: PaddingValues, quizId: Int, questions: List<Question>,
     if (currentQuestionIndex < questions.size) {
         val currentQuestion = questions[currentQuestionIndex]
         Column (
-            Modifier.padding(top = innerPadding.calculateTopPadding() + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+            Modifier.padding(top = innerPadding.calculateTopPadding() + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp).testTag("Quiz"),
         ) {
             QuestionNumber(currentQuestionIndex + 1, questions.size)
             Spacer(modifier = Modifier.height(8.dp))

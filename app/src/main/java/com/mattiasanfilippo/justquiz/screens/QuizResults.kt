@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,32 +63,36 @@ fun Content(innerPadding: PaddingValues, correctAnswers: Int, totalQuestions: In
 
 @Composable
 fun PositiveResult(correctAnswers: Int, totalQuestions: Int, percentage: Int) {
-    Icon(
-        painter = painterResource(id = R.drawable.trophy_24),
-        contentDescription = "Trophy Icon",
-        tint = Color(0xFFF5BF00),
-        modifier = Modifier
-            .width(84.dp)
-            .height(84.dp)
-    )
-    BigTitle("Congratulations!")
-    Spacer(modifier = Modifier.height(16.dp))
-    ResultText("You have completed the quiz, and scored $correctAnswers out of $totalQuestions. ($percentage%)")
+    Column(modifier = Modifier.testTag("PositiveResult")) {
+        Icon(
+            painter = painterResource(id = R.drawable.trophy_24),
+            contentDescription = "Trophy Icon",
+            tint = Color(0xFFF5BF00),
+            modifier = Modifier
+                .width(84.dp)
+                .height(84.dp)
+        )
+        BigTitle("Congratulations!")
+        Spacer(modifier = Modifier.height(16.dp))
+        ResultText("You have completed the quiz, and scored $correctAnswers out of $totalQuestions. ($percentage%)")
+    }
 }
 
 @Composable
 fun NegativeResult(correctAnswers: Int, totalQuestions: Int, percentage: Int) {
-    Icon(
-        painter = painterResource(id = R.drawable.replay_24),
-        contentDescription = "Sad Icon",
-        tint = MaterialTheme.colorScheme.error,
-        modifier = Modifier
-            .width(84.dp)
-            .height(84.dp)
-    )
-    BigTitle("Try again!")
-    Spacer(modifier = Modifier.height(16.dp))
-    ResultText("You scored $correctAnswers out of $totalQuestions. ($percentage%), which is not enough to pass.")
+    Column(modifier = Modifier.testTag("NegativeResult")) {
+        Icon(
+            painter = painterResource(id = R.drawable.replay_24),
+            contentDescription = "Sad Icon",
+            tint = MaterialTheme.colorScheme.error,
+            modifier = Modifier
+                .width(84.dp)
+                .height(84.dp)
+        )
+        BigTitle("Try again!")
+        Spacer(modifier = Modifier.height(16.dp))
+        ResultText("You scored $correctAnswers out of $totalQuestions. ($percentage%), which is not enough to pass.")
+    }
 }
 
 @Composable
