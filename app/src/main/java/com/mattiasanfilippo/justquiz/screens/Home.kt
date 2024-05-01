@@ -185,8 +185,10 @@ fun ScrollContent(
     onRetryQuizCardClick: (Int) -> Unit
 ) {
     Column(modifier = Modifier.padding(innerPadding)) {
-        CompletedQuizzesGrid(completedQuizzes, onRetryQuizCardClick)
-        Spacer(modifier = Modifier.height(16.dp))
+        if (completedQuizzes.isNotEmpty()) {
+            CompletedQuizzesGrid(completedQuizzes, onRetryQuizCardClick)
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         NewQuizGrid(quizzes, onQuizCardClick)
     }
 }
