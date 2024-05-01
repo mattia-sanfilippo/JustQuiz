@@ -28,7 +28,7 @@ fun QuizResults(navController: NavController, innerPadding: PaddingValues, quizI
     val percentage = (correctAnswers.toFloat() / totalQuestions.toFloat() * 100).toInt()
 
     fun onClickRetry() {
-        navController.navigate("quiz/$quizId")
+        navController.navigate("quiz/$quizId/false")
     }
 
     fun onClickGoToHome() {
@@ -63,7 +63,7 @@ fun Content(innerPadding: PaddingValues, correctAnswers: Int, totalQuestions: In
 
 @Composable
 fun PositiveResult(correctAnswers: Int, totalQuestions: Int, percentage: Int) {
-    Column(modifier = Modifier.testTag("PositiveResult")) {
+    Column(modifier = Modifier.testTag("PositiveResult"), horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(id = R.drawable.trophy_24),
             contentDescription = "Trophy Icon",
@@ -80,7 +80,7 @@ fun PositiveResult(correctAnswers: Int, totalQuestions: Int, percentage: Int) {
 
 @Composable
 fun NegativeResult(correctAnswers: Int, totalQuestions: Int, percentage: Int) {
-    Column(modifier = Modifier.testTag("NegativeResult")) {
+    Column(modifier = Modifier.testTag("NegativeResult"), horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(id = R.drawable.replay_24),
             contentDescription = "Sad Icon",

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,6 +29,7 @@ import com.mattiasanfilippo.justquiz.db.Result
 import com.mattiasanfilippo.justquiz.model.Quiz
 import com.mattiasanfilippo.justquiz.model.QuizList
 import com.mattiasanfilippo.justquiz.ui.components.HistoryItem
+import com.mattiasanfilippo.justquiz.ui.components.ScreenTitle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -62,12 +65,14 @@ fun History(innerPadding: PaddingValues) {
 
 
 
-    Column (modifier = Modifier.padding(innerPadding)) {
+    Column (modifier = Modifier.padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 16.dp)) {
+        ScreenTitle(title = "History")
+        Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(resultsWithQuiz.value) { (result, quiz) ->
                 if (quiz != null) {
                     HistoryItem(quizName = quiz.name, date = result.timestamp, totalQuestions = result.totalQuestions, correctAnswers = result.correctAnswers)
-                    Divider(color = Color.Gray, thickness = 0.5.dp)
+                    Spacer(Modifier.height(8.dp))
                 }
             }
         }

@@ -184,7 +184,7 @@ fun ScrollContent(
     onQuizCardClick: (Int) -> Unit,
     onRetryQuizCardClick: (Int) -> Unit
 ) {
-    Column(modifier = Modifier.padding(innerPadding)) {
+    Column(modifier = Modifier.padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 16.dp)) {
         if (completedQuizzes.isNotEmpty()) {
             CompletedQuizzesGrid(completedQuizzes, onRetryQuizCardClick)
             Spacer(modifier = Modifier.height(16.dp))
@@ -200,6 +200,7 @@ fun NewQuizGrid(quizzes: List<Quiz>, onQuizCardClick: (Int) -> Unit) {
         color = MaterialTheme.colorScheme.primary,
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )
+    Spacer(modifier = Modifier.height(16.dp))
     LazyVerticalGrid(
         columns = GridCells.Adaptive(156.dp),
         contentPadding = PaddingValues(
@@ -222,6 +223,7 @@ fun CompletedQuizzesGrid(completedQuizzes: List<Quiz>, onQuizCardClick: (Int) ->
         color = MaterialTheme.colorScheme.primary,
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )
+    Spacer(modifier = Modifier.height(16.dp))
     LazyVerticalGrid(
         columns = GridCells.Adaptive(156.dp),
         contentPadding = PaddingValues(
